@@ -3,7 +3,7 @@
         <div>
             <n-layout position="absolute">
                 <n-layout-header style="height: 64px; padding: 24px; background-color: #202020;">
-                    <n-space justify="center" size="large">
+                    <n-space justify="center" size="large" style="width: 600px; margin: auto;">
                         <span v-for="column in columns" style="color: #FFF;">
                             <n-button v-if="route.path == column.path" text color="#FFF" size="large" @click="changeColumn(column)">
                                 <b>{{ column.label }}</b>
@@ -36,10 +36,15 @@
                         </n-button>
                     </n-space>
                 </n-layout-header>
+                <div>
+                    <router-view ></router-view>
+                </div>
+                <n-layout-footer
+                    style="height: 64px; padding: 24px; background-color: #202020; text-align: center; color: #b0b0b0;"
+                    >
+                    ai漫改工作室
+                </n-layout-footer>
             </n-layout>
-        </div>
-        <div style="position: absolute; top: 64px;">
-            <router-view ></router-view>
         </div>
     </div>
 </template>
@@ -104,5 +109,4 @@ const changeColumn = (column) => {
 </script>
 
 <style lang="scss" scoped>
-
 </style>

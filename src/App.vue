@@ -9,10 +9,10 @@
 <script setup>
 const themeOverrides =  {
   common: {
-    primaryColor: '#01c4e2',
-    primaryColorHover: '#24c4d6',
-    primaryColorPressed: '0088a3',
-    primaryColorSupp: '#24c4d6'
+    primaryColor: '#3399ff',
+    primaryColorHover: '#57aaf2',
+    primaryColorPressed: '1d69bf',
+    primaryColorSupp: '#57aaf2'
   }
 }
 </script>

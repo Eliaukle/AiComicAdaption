@@ -1,31 +1,28 @@
 <template>
     <div class="cover">
-        <img height="240" width="180" :src="props.src" style="border-radius: 5px; cursor: pointer; object-fit: cover;">
+        <img height="240" width="180" :src="props.src" style="border-radius: 5px; cursor: pointer; object-fit: cover;" @click="toDetail">
+        <div style="position: absolute; top: 200px; left: 0px; height: 40px; width: 180px; background: linear-gradient(to top, rgba(0,0,0,1),rgba(0,0,0,0)); border-radius: 5px; opacity: 0.7;"></div>
         <a>
             <div class="mask" @click="toDetail"></div>
             <br>
             <text class="title" style="font-size: large;" @click="toDetail">{{ props.title }}</text>
         </a>
-        <br>
-        <n-space justify="space-between">
-            <text style="font-size: small; color: #b0b0b0;">
-                {{ props.author }}
+        <text style="font-size: small; color: #fff; position: absolute; top: 215px; left: 5px;">
+            {{ props.author }}
+        </text>
+        <span style="position: absolute; top: 215px; right: 5px;">
+            <n-icon size="14" color="#fff">
+                <ThumbsUp />
+            </n-icon>
+            <text style="font-size: small; color: #fff;">
+                {{ props.likes }}
             </text>
-            <span>
-                <n-icon size="14" color="#b0b0b0">
-                    <ThumbsUp />
-                </n-icon>
-                <text style="font-size: small; color: #b0b0b0;">
-                    {{ props.likes }}
-                </text>
-            </span>
-        </n-space>
+        </span>
         <div style="height: 10px;"></div>
     </div>
 </template>
 
 <script setup>
-import { ref, reactive, onMounted } from "vue";
 import { ThumbsUp } from "@vicons/carbon"
 
 import { useRouter, useRoute } from 'vue-router'
@@ -81,7 +78,6 @@ const toDetail = () => {
     height: 240px; 
     background-color: #FFF; 
     opacity: 0;
-    border-radius: 5px;
     cursor: pointer;
 }
 .title {

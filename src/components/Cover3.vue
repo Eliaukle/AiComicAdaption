@@ -1,33 +1,23 @@
 <template>
     <div class="cover">
-        <img height="240" width="180" :src="props.src" style="border-radius: 5px; cursor: pointer; object-fit: cover;">
+        <img height="132" width="220" :src="props.src" style="border-radius: 5px; cursor: pointer; object-fit: cover;" @click="toDetail">
+        <div style="position: absolute; top: 97px; left: 0px; height: 35px; width: 220px; background: linear-gradient(to top, rgba(0,0,0,1),rgba(0,0,0,0)); border-radius: 5px; opacity: 0.7;"></div>
         <a>
             <div class="mask" @click="toDetail"></div>
             <br>
-            <text class="title" style="font-size: large;" @click="toDetail">{{ props.title }}</text>
+            <n-space justify="space-between">
+                <text class="title" style="font-size: medium;" @click="toDetail">{{ props.title }}</text>
+                <text style="font-size: medium; color: #b0b0b0;">{{ props.label1 }}</text>
+            </n-space>
         </a>
-        <br>
-        <n-space justify="space-between">
-            <text style="font-size: small; color: #b0b0b0;">
-                {{ props.author }}
-            </text>
-            <span>
-                <n-icon size="14" color="#b0b0b0">
-                    <ThumbsUp />
-                </n-icon>
-                <text style="font-size: small; color: #b0b0b0;">
-                    {{ props.likes }}
-                </text>
-            </span>
-        </n-space>
+        <text style="font-size: small; color: #fff; position: absolute; top: 107px; left: 5px;">
+            {{ props.author }}
+        </text>
         <div style="height: 10px;"></div>
     </div>
 </template>
 
 <script setup>
-import { ref, reactive, onMounted } from "vue";
-import { ThumbsUp } from "@vicons/carbon"
-
 import { useRouter, useRoute } from 'vue-router'
 const router = useRouter()
 const route = useRoute()
@@ -53,6 +43,10 @@ const props = defineProps({
         type: Number,
         default: 0,
     },
+    label1: {
+        type: String,
+        default: '',
+    },
 })
 
 const toDetail = () => {
@@ -70,18 +64,17 @@ const toDetail = () => {
 <style lang="scss" scoped>
 .cover {
     position: relative;
-    width: 180px;
+    width: 220px;
     display: inline-block;
 }
 .mask {
     position: absolute; 
     top: 0px; 
     left: 0px; 
-    width: 180px; 
-    height: 240px; 
+    width: 240px; 
+    height: 160px; 
     background-color: #FFF; 
     opacity: 0;
-    border-radius: 5px;
     cursor: pointer;
 }
 .title {

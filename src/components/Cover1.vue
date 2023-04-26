@@ -1,12 +1,17 @@
 <template>
     <div class="cover">
-        <img height="240" width="180" :src="props.src" style="border-radius: 5px; cursor: pointer; object-fit: cover;">
+        <img height="240" width="180" :src="props.src" style="border-radius: 5px; cursor: pointer; object-fit: cover;" @click="toDetail">
         <a>
             <div class="mask" @click="toDetail"></div>
             <br>
             <text class="title" style="font-size: large;" @click="toDetail">{{ props.title }}</text>
         </a>
-        <br>
+        <n-tag :bordered="false" :color="{ color: '#000', textColor: '#fff', borderColor: '#000' }" size="small" style="position: absolute; left: 5px; top: 212px; opacity: 0.5;" >
+            {{ props.label1 }}
+        </n-tag>
+        <n-tag v-if="props.label2" :bordered="false" :color="{ color: '#000', textColor: '#fff', borderColor: '#000' }" size="small" style="position: absolute; margin-left: 10px; top: 212px; opacity: 0.5;" >
+            {{ props.label2 }}
+        </n-tag>
         <n-space justify="space-between">
             <text style="font-size: small; color: #b0b0b0;">
                 {{ props.author }}
@@ -25,7 +30,6 @@
 </template>
 
 <script setup>
-import { ref, reactive, onMounted } from "vue";
 import { ThumbsUp } from "@vicons/carbon"
 
 import { useRouter, useRoute } from 'vue-router'
@@ -52,6 +56,14 @@ const props = defineProps({
     likes: {
         type: Number,
         default: 0,
+    },
+    label1: {
+        type: String,
+        default: '',
+    },
+    label2: {
+        type: String,
+        default: '',
     },
 })
 

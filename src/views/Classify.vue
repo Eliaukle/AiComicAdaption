@@ -1,55 +1,69 @@
 <template>
-    <div class="board">
-        <div style="height: 20px;"></div>
-        <n-card style="width: 81vw; margin: auto;" :bordered="false">
-            <n-space vertical size="large">
-                <div v-for="classify in classifyList">
-                    <text style="color: #b0b0b0;">
-                        {{ classify.label }}
-                    </text>
-                    <span v-for="child in classify.children" style="margin-left: 10px;">
-                        <n-button strong secondary type="primary" round v-if="((selectedList.tab.key==classify.key)&&(selectedList.tab.selectId==child.id))||((selectedList.pay.key==classify.key)&&(selectedList.pay.selectId==child.id))||((selectedList.state.key==classify.key)&&(selectedList.state.selectId==child.id))" @click="unSelectClassifyChildren(classify)">
-                            {{ child.label }}
-                        </n-button>
-                        <n-button round quaternary v-else @click="selectClassifyChildren(classify, child)">
-                            {{ child.label }}
-                        </n-button>
-                    </span>
-                </div>
-            </n-space>
-        </n-card>
-        <n-card style="width: 81vw; margin: auto;" :bordered="false">
-            <n-tabs type="line" @update:value="selectSort">
-                <n-tab-pane name="0" tab="最热">
-                    <div style="margin-top: 20px; margin-bottom: 20px;"> 
-                        <n-space size="large">
-                            <Cover v-for="i in 10"
-                                :id="cover1.id"
-                                :src="cover1.src "                           
-                                :title="cover1.title"                        
-                                :author="cover1.author"                           
-                                :likes="cover1.likes"
-                            />
-                        </n-space>
-                    </div>
-                    <n-pagination @update:page="setQuery" v-model:page="selectedList.page.selectId" :page-count="10" style="justify-content: center;"/>
-                </n-tab-pane>
-                <n-tab-pane name="1" tab="最新">
-                    <div style="margin-top: 20px; margin-bottom: 20px;"> 
-                        <n-space size="large">
-                            <Cover v-for="i in 10"
-                                :id="cover2.id"
-                                :src="cover2.src "                           
-                                :title="cover2.title"                        
-                                :author="cover2.author"                           
-                                :likes="cover2.likes"
-                            />
-                        </n-space>
-                    </div>
-                    <n-pagination @update:page="setQuery" v-model:page="selectedList.page.selectId" :page-count="10" style="justify-content: center;"/>
-                </n-tab-pane>
-            </n-tabs>
-        </n-card>
+    <div>
+        <n-grid cols="8" item-responsive>
+            <n-grid-item span="0 1640:1">
+            </n-grid-item>
+            <n-grid-item span="6 100:8 1640:6">
+            <div style="overflow-x: auto;">
+                <div style="height: 20px;"></div>
+                <!--选择分类-->
+                <n-card style="width: 1240px; margin: auto;" :bordered="false">
+                    <n-space vertical size="large">
+                        <div v-for="classify in classifyList">
+                            <text style="color: #b0b0b0;">
+                                {{ classify.label }}
+                            </text>
+                            <span v-for="child in classify.children" style="margin-left: 10px;">
+                                <n-button strong secondary type="primary" round v-if="((selectedList.tab.key==classify.key)&&(selectedList.tab.selectId==child.id))||((selectedList.pay.key==classify.key)&&(selectedList.pay.selectId==child.id))||((selectedList.state.key==classify.key)&&(selectedList.state.selectId==child.id))" @click="unSelectClassifyChildren(classify)">
+                                    {{ child.label }}
+                                </n-button>
+                                <n-button round quaternary v-else @click="selectClassifyChildren(classify, child)">
+                                    {{ child.label }}
+                                </n-button>
+                            </span>
+                        </div>
+                    </n-space>
+                </n-card>
+                <!--结果展示-->
+                <n-card style="width: 1240px; margin: auto;" :bordered="false">
+                    <n-tabs type="line" @update:value="selectSort">
+                        <n-tab-pane name="0" tab="最热">
+                            <div style="margin-top: 20px; margin-bottom: 20px;"> 
+                                <n-space justify="space-between">
+                                    <Cover v-for="i in coverNum"
+                                        :id="cover1.id"
+                                        :src="cover1.src "                           
+                                        :title="cover1.title"                        
+                                        :author="cover1.author"                           
+                                        :likes="cover1.likes"
+                                    />
+                                    <div v-for="i in fillerNum" style="width: 180px;"></div>
+                                </n-space>
+                            </div>
+                            <n-pagination @update:page="setQuery" v-model:page="selectedList.page.selectId" :page-count="10" style="justify-content: center;"/>
+                        </n-tab-pane>
+                        <n-tab-pane name="1" tab="最新">
+                            <div style="margin-top: 20px; margin-bottom: 20px;"> 
+                                <n-space justify="space-between">
+                                    <Cover v-for="i in coverNum"
+                                        :id="cover2.id"
+                                        :src="cover2.src "                           
+                                        :title="cover2.title"                        
+                                        :author="cover2.author"                           
+                                        :likes="cover2.likes"
+                                    />
+                                    <div v-for="i in fillerNum" style="width: 180px;"></div>
+                                </n-space>
+                            </div>
+                            <n-pagination @update:page="setQuery" v-model:page="selectedList.page.selectId" :page-count="10" style="justify-content: center;"/>
+                        </n-tab-pane>
+                    </n-tabs>
+                </n-card>
+            </div>
+            </n-grid-item>
+            <n-grid-item span="0 1640:1">
+            </n-grid-item>
+        </n-grid>
     </div>
 </template>
 
@@ -180,6 +194,24 @@ const cover2 = reactive({
     likes: 20,
 })
 
+const coverNum = ref(22)
+const fillerNum = ref(0)
+
+// // 监视屏幕大小
+// function watchWindowSize() {
+//     var w = document.documentElement.clientWidth;
+//     var boardWidth = w * 0.8;
+//     var colNum = Math.floor(boardWidth / 190);
+//     fillerNum.value = colNum - (coverNum.value % colNum);
+//     console.log(coverNum.value, colNum, fillerNum.value)
+// }
+// window.addEventListener("resize", watchWindowSize);
+// watchWindowSize();
+
+onMounted(() => {
+    fillerNum.value = 6 - (coverNum.value % 6);
+})
+
 // 设置路由参数
 const setQuery = () => {
     router.replace({
@@ -235,7 +267,4 @@ const selectSort = (name) => {
 </script>
 
 <style lang="scss" scoped>
-.board {
-    width: 100vw;
-}
 </style>

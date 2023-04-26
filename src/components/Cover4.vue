@@ -1,33 +1,20 @@
 <template>
     <div class="cover">
-        <img height="240" width="180" :src="props.src" style="border-radius: 5px; cursor: pointer; object-fit: cover;">
+        <div style="position: absolute; top: 0px; left: 185px; height: 185px; width: 190px; background-color: rgba(240, 240, 244, 1); border-radius: 0 5px 5px 0;">
+            <n-tag :color="{ color: '#3399ff', textColor: '#fff', borderColor: '#3399ff' }" :bordered="false" style="margin-top: 20px; margin-left: 20px;">&nbsp;TOP.{{ props.rank }}&nbsp;</n-tag>
+            <div style="margin-top: 35px; margin-left: 20px; color: rgb(118, 124, 130);">{{ props.author }}</div>
+            <div style="margin-top: 20px; margin-left: 20px; margin-right: 20px; margin-bottom: 20px; color: rgb(118, 124, 130);">{{ props.content }}</div>
+        </div>
+        <img height="185" width="185" :src="props.src" style="border-radius: 5px 0 0 5px; cursor: pointer; object-fit: cover;" @click="toDetail">
         <a>
             <div class="mask" @click="toDetail"></div>
-            <br>
-            <text class="title" style="font-size: large;" @click="toDetail">{{ props.title }}</text>
+            <text class="title" style="position: absolute; top: 55px; left: 205px; font-size: large;" @click="toDetail">{{ props.title }}</text>
         </a>
-        <br>
-        <n-space justify="space-between">
-            <text style="font-size: small; color: #b0b0b0;">
-                {{ props.author }}
-            </text>
-            <span>
-                <n-icon size="14" color="#b0b0b0">
-                    <ThumbsUp />
-                </n-icon>
-                <text style="font-size: small; color: #b0b0b0;">
-                    {{ props.likes }}
-                </text>
-            </span>
-        </n-space>
         <div style="height: 10px;"></div>
     </div>
 </template>
 
 <script setup>
-import { ref, reactive, onMounted } from "vue";
-import { ThumbsUp } from "@vicons/carbon"
-
 import { useRouter, useRoute } from 'vue-router'
 const router = useRouter()
 const route = useRoute()
@@ -49,7 +36,11 @@ const props = defineProps({
         type: String,
         default: '',
     },
-    likes: {
+    content: {
+        type: String,
+        default: '',
+    },
+    rank: {
         type: Number,
         default: 0,
     },
@@ -70,18 +61,17 @@ const toDetail = () => {
 <style lang="scss" scoped>
 .cover {
     position: relative;
-    width: 180px;
+    width: 375px;
     display: inline-block;
 }
 .mask {
     position: absolute; 
     top: 0px; 
     left: 0px; 
-    width: 180px; 
-    height: 240px; 
+    width: 185px; 
+    height: 185px; 
     background-color: #FFF; 
     opacity: 0;
-    border-radius: 5px;
     cursor: pointer;
 }
 .title {
